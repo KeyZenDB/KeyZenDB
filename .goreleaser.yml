@@ -1,0 +1,15 @@
+---
+project_name: KeyZenDB
+builds:
+  - main: ./cmd/main.go
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+release:
+  github:
+    owner: KeyZenDB
+    name: KeyZenDB
