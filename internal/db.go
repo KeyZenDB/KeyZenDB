@@ -13,7 +13,7 @@ func NewDb() *Db {
 	return &Db{}
 }
 
-func (db *Db) Set(key string, value any, ttl ...time.Duration) {
+func (db *Db) Set(key string, value any, ttl ...time.Duration) any {
 	db.store.Store(key, value)
 	if len(ttl) > 0 && ttl[0] > 0 {
 		// if have ttl after this time remove this key
@@ -22,6 +22,7 @@ func (db *Db) Set(key string, value any, ttl ...time.Duration) {
 			db.Del(key)
 		}()
 	}
+	return "OK"
 }
 
 func (db *Db) Get(key string) any {
@@ -31,12 +32,14 @@ func (db *Db) Get(key string) any {
 	return nil
 }
 
-func (db *Db) Del(key string) {
+func (db *Db) Del(key string) any {
 	db.store.Delete(key)
+	return "OK"
 }
 
-func (db *Db) Clear() {
+func (db *Db) Clear() any {
 	db.store.Clear()
+	return "OK"
 }
 
 func (db *Db) Keys() []string {
@@ -82,4 +85,8 @@ func (db *Db) Len() int {
 		return true
 	})
 	return count
+}
+
+func (db *Db) Ping() any {
+	return "PONG"
 }
